@@ -53,7 +53,7 @@ const NotesList = props => {
 
 
   const handleEditNote = (note) => {
-    form.updateForm(note);
+    form.current.updateForm(note);
   };
 
   const handleRemoveNote = (id) => {
@@ -65,23 +65,29 @@ const NotesList = props => {
   return (
     <Fragment>
       <NoteForm onSubmit={addNote} ref={form}/>
-      <ol>
+      <ol className="note--list">
         {notes.map((note) => (
-          <li key={note.id} className={note.done === true ? 'note--done' : ''}>
-            <div>{note.noteText}</div>
-            <div>
+          <li key={note.id} className={`note${note.done === true ? ' note--done' : ''}`}>
+            <div className="note__header">
+              <h1>{note.noteTitle}</h1>
+              <button onClick={() => handleRemoveNote(note.id)}>X</button>
+            </div>
+
+            <div className={`note__body${note.done === true ? ' note__body--done' : ''}`}>{note.noteText}</div>
+            <div className="note__date">
               {note.changed === note.created ? (
-                <div>created: {note.created}</div>
+                <div className="note__time note--created">created: {note.created}</div>
               ) : (
                 <>
-                  <div>created: {note.created}</div>
-                  <div>changed: {note.changed}</div>
+                  <div className="note__time note__time--created">created: {note.created}</div>
+                  <div className="note__time note__time--changed">changed: {note.changed}</div>
                 </>
               )}
             </div>
 
-            <button onClick={() => handleEditNote(note)}>E</button>
-            <button onClick={() => handleRemoveNote(note.id)}>X</button>
+            <div className="note__actions">
+              <button onClick={() => handleEditNote(note)}>E</button>
+            </div>
           </li>))}
       </ol>
     </Fragment>

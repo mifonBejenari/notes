@@ -1,7 +1,8 @@
 import React from "react";
 
 const NewTextarea = props => {
-  const placeholder = "todo text...";
+  const placeholder = "Note Body...";
+
   return (
     <textarea name="noteText"
               value = {props.noteText}

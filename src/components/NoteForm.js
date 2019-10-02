@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import NewTextarea from './noteTextArea';
-// import doneCheck from './noteDone.js';
+import NewTextarea from './NewTextarea.js';
+import DoneCheck from './DoneCheck.js';
+import NoteTitle from "./NoteTitle";
 
 export default class NoteForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      noteTitle: "",
       noteText: "",
       done: false,
       id: false,
@@ -16,6 +18,13 @@ export default class NoteForm extends Component {
       noteLength: 0
     };
   }
+
+  handleChangedTitle = ({target}) => {
+    const { value } = target;
+    this.setState({
+      [target.name]: value,
+    })
+  };
 
   handleChangedText = ({target}) => {
     const { value } = target;
@@ -38,13 +47,14 @@ export default class NoteForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const {id , created, noteText, done } = this.state;
+    const {id , created, noteTitle, noteText, done } = this.state;
 
     const text = noteText.replace(/\s/g, '');
 
     if (text.length >= 1) {
       this.props.onSubmit({
         id,
+        noteTitle,
         noteText,
         done,
         created: created === false ? this.setTime() : created,
@@ -56,6 +66,7 @@ export default class NoteForm extends Component {
       id: false,
       created: false,
       changed: false,
+      noteTitle: "",
       noteText: "",
       done: false,
       noteLength: 0
@@ -73,9 +84,11 @@ export default class NoteForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
+        <NoteTitle {...state} onChange={this.handleChangedTitle}/>
+        {/*<input {...state} type="text"onChange={this.handleChangedTitle}/>*/}
 
         <NewTextarea {...state} onChange={this.handleChangedText} />
-        {/*<doneCheck {...state} onChange={this.handlerDone}/>*/}
+        <DoneCheck {...state} onChange={this.handlerDone}/>
 
         <div>{state.noteLength} / {state.maxLength}</div>
         <div className="actions">

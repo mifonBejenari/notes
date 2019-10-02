@@ -1,18 +1,18 @@
 import React from "react";
 
-const doneCheck = props => {
-  const { done } = props;
+const DoneCheck = props => {
+  // const { done } = props;
 
   return (
     <div>
       <label htmlFor = "done">Done</label>
       <input name = "done"
              type = "checkbox"
-             checked = {done}
-             id = "done" onChange={this.handlerDone}
+             checked = { props.done }
+             id = "done" onChange={props.onChange}
       />
     </div>
   )
 };
 
-export default doneCheck;
+export default DoneCheck;
