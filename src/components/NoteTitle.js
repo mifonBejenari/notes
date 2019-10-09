@@ -8,6 +8,7 @@ const NoteTitle = props => {
             value = {props.noteTitle}
             onChange = {props.onChange}
             placeholder = {placeholder}
+           autoComplete="off"
     />
   )
 };
